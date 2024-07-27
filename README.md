@@ -146,7 +146,7 @@ class User extends Model implements Redactable
 
     public function redactionStrategy(): RedactionStrategy
     {
-        return (new ReplaceContents())->replaceWith([
+        return app(ReplaceContents::class)->replaceWith([
             'name' => 'REDACTED',
             'email' => 'redacted@redacted.com',
         ]);
