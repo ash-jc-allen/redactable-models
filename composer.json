@@ -1,0 +1,52 @@
+{
+  "name": "ashallendesign/redactable-models",
+  "description": "A Laravel package for easily redacting model data.",
+  "type": "library",
+  "homepage": "https://github.com/ash-jc-allen/redactable-models",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ash Allen",
+      "email": "mail@ashallendesign.co.uk"
+    }
+  ],
+  "keywords": [
+    "ashallendesign",
+    "laravel",
+    "models",
+    "redactable-models"
+  ],
+  "require": {
+    "php": "^8.2",
+    "laravel/framework": "^10.0|^11.0"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.0",
+    "orchestra/testbench": "^9.0",
+    "phpunit/phpunit": "^10.0|^11.0",
+    "nunomaduro/larastan": "^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "AshAllenDesign\\RedactableModels\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+        "AshAllenDesign\\RedactableModels\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "AshAllenDesign\\RedactableModels\\RedactableModelsProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "larastan": "vendor/bin/phpstan analyse"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
