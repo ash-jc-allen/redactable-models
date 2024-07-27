@@ -56,7 +56,8 @@ class RedactFieldsTest extends TestCase
         $this->expectException(RedactableFieldsException::class);
         $this->expectExceptionMessage('The model must implement the [AshAllenDesign\RedactableModels\Interfaces\Redactable] interface.');
 
-        $model = new class extends Model {
+        $model = new class extends Model
+        {
             use HasRedactedFields;
         };
 
