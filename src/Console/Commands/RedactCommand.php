@@ -41,7 +41,7 @@ class RedactCommand extends Command
 
         $models = $instance->redactable()->get();
 
-        $this->components->info('Redacting [' . $models->count() . '] [' . $model . '] models.');
+        $this->components->info('Redacting ['.$models->count().'] ['.$model.'] models.');
 
         $models->map(function (Redactable $model) use ($redactor, $strategy): void {
             $redactor->redact($model, $strategy);
@@ -57,11 +57,11 @@ class RedactCommand extends Command
             ->map(function (SplFileInfo $model): string {
                 $namespace = $this->laravel->getNamespace();
 
-                return $namespace . str_replace(
-                        ['/', '.php'],
-                        ['\\', ''],
-                        Str::after($model->getRealPath(), realpath(app_path()) . DIRECTORY_SEPARATOR)
-                    );
+                return $namespace.str_replace(
+                    ['/', '.php'],
+                    ['\\', ''],
+                    Str::after($model->getRealPath(), realpath(app_path()).DIRECTORY_SEPARATOR)
+                );
             })->filter(function (string $model): bool {
                 return class_exists($model);
             })->filter(function (string $model): bool {
