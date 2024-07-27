@@ -25,7 +25,7 @@ class HashContents implements RedactionStrategy
     }
 
     /**
-     * @param string[] $fields
+     * @param  string[]  $fields
      * @return $this
      */
     public function fields(array $fields): static
