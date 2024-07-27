@@ -29,6 +29,7 @@
 - [Testing](#testing)
 - [Security](#security)
 - [Credits](#credits)
+- [Changelog](#changelog)
 - [License](#license)
     
 ## Overview
@@ -331,6 +332,10 @@ Note: A contribution guide will be added soon.
 - [Ash Allen](https://ashallendesign.co.uk)
 - [Jess Allen](https://jesspickup.co.uk) (Logo)
 - [All Contributors](https://github.com/ash-jc-allen/redactable-models/graphs/contributors)
+
+## Changelog
+
+Check the [CHANGELOG](CHANGELOG.md) to get more information about the latest changes.
 
 ## License
 
