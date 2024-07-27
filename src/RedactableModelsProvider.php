@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\RedactableModels;
 
-use Illuminate\Support\ServiceProvider;
 use AshAllenDesign\RedactableModels\Console\Commands\RedactCommand;
+use Illuminate\Support\ServiceProvider;
 
 class RedactableModelsProvider extends ServiceProvider
 {

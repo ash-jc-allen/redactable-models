@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class ReplaceContents implements RedactionStrategy
 {
     /**
-     * @var array<string,mixed>|Closure(Model $model): void
+     * @var array<string,mixed>|Closure(Model): void
      */
     private array|Closure $replaceWithMappings;
 
@@ -26,7 +26,7 @@ class ReplaceContents implements RedactionStrategy
     }
 
     /**
-     * @param array<string,mixed>|Closure(Model $model): void $replaceWith
+     * @param  array<string,mixed>|Closure(Model $model): void  $replaceWith
      * @return $this
      */
     public function replaceWith(array|Closure $replaceWith): static
