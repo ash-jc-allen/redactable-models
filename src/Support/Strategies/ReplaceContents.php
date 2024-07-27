@@ -6,19 +6,24 @@ namespace AshAllenDesign\RedactableModels\Support\Strategies;
 
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
+use Closure;
 
 class ReplaceContents implements RedactionStrategy
 {
-    private array $replaceWith;
+    private array|Closure $replaceWithMappings;
 
     public function apply(Redactable $model): void
     {
-        $model->forceFill($this->replaceWith)->save();
+        is_array($this->replaceWithMappings)
+            ? $model->forceFill($this->replaceWithMappings)
+            : ($this->replaceWithMappings)($model);
+
+        $model->save();
     }
 
-    public function replaceWith(array $replaceWith): static
+    public function replaceWith(array|Closure $replaceWith): static
     {
-        $this->replaceWith = $replaceWith;
+        $this->replaceWithMappings = $replaceWith;
 
         return $this;
     }
