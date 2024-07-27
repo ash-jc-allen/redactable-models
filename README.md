@@ -1,4 +1,5 @@
 <p align="center">
+<img src="/docs/logo.png" alt="Redactable Models for Laravel" width="600">
 </p>
 
 <p align="center">
