@@ -75,7 +75,7 @@
 
 A Laravel package that you can use to redact, obfuscate, or mask fields from your models in a consistent and easy way.
 
-When building web applications, you'll often need to keep hold of old data for auditing or reporting purposes. But for data privacy and security reasons, you may want to redact the sensitive information from the data that you store. This way, you can keep the data, but without the risk of exposing sensitive information.
+When building web applications, you'll often need to keep hold of old data for auditing or reporting purposes. But for data privacy and security reasons, you may want to redact the sensitive information from the data that you store. This way, you can keep the rows in the database, but without the sensitive information.
 
 This package allows you to define which models and fields should be redacted, and how they should be redacted.
 
@@ -126,7 +126,7 @@ class User extends Model implements Redactable
 
 The `redactable` method allows you to return an instance of `Illuminate\Contracts\Database\Eloquent\Builder` which defines the models that are redactable.
 
-The `redactionStrategy` method allows you to return an instance of `AshAllenDesign\RedactableModels\RedactionStrategy` which defines how the fields should be redacted. We'll cover the available strategies further down.
+The `redactionStrategy` method allows you to return an instance of `AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy` which defines how the fields should be redacted. We'll cover the available strategies further down.
 
 As an example, if we wanted to redact the `email` and `name` fields from all `App\Models\User` models older than 30 days, we could do the following:
 
@@ -265,8 +265,8 @@ class User extends Authenticatable implements Redactable
     public function redactionStrategy(): RedactionStrategy
     {
         return app(MaskContents::class)
-            ->mask('name', '*', 0, 4)
-            ->mask('email', '-', 2, 3);
+            ->mask(field: 'name', character: '*', index: 0, length: 4)
+            ->mask(field: 'email', character: '-', index: 2, length: 3);
     }
 }
 ```
@@ -343,7 +343,7 @@ $user->redactFields(
 
 #### `ModelRedacted`
 
-When a model is redacted, a `AshAllenDesign\RedactableModels\Events\ModelRedacted` event is fired that can be listened on.
+When a model is redacted, an `AshAllenDesign\RedactableModels\Events\ModelRedacted` event is fired that can be listened on.
 
 ## Testing
 
