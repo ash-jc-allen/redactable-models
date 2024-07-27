@@ -14,58 +14,20 @@
 - [Installation](#installation)
     - [Requirements](#requirements)
     - [Install the Package](#install-the-package)
-    - [Publish the Config and Migrations](#publish-the-config-and-migrations)
-    - [Migrate the Database](#migrate-the-database)
 - [Usage](#usage)
-    - [Building Shortened URLs](#building-shortened-urls)
-        - [Quick Start](#quick-start)
-        - [Custom Keys](#custom-keys)
-        - [Tracking Visitors](#tracking-visitors)
-            - [Enabling Tracking](#enabling-tracking)
-            - [Tracking IP Address](#tracking-ip-address)
-            - [Tracking Browser & Browser Version](#tracking-browser--browser-version)
-            - [Tracking Operating System & Operating System Version](#tracking-operating-system--operating-system-version)
-            - [Tracking Device Type](#tracking-device-type)
-            - [Tracking Referer URL](#tracking-referer-url)
-        - [Custom Short URL Fields](#custom-short-url-fields)
-        - [Single Use](#single-use)
-        - [Enforce HTTPS](#enforce-https)
-        - [Forwarding Query Parameters](#forwarding-query-parameters)
-        - [Redirect Status Code](#redirect-status-code)
-        - [Activation and Deactivation Times](#activation-and-deactivation-times)
-        - [Using a Custom Seed](#using-a-custom-seed)
-        - [Facade](#facade)
-        - [Conditionals](#conditionals)
-    - [Using the Shortened URLs](#using-the-shortened-urls)
-        - [Default Route and Controller](#default-route-and-controller)
-        - [Custom Route](#custom-route)
-    - [Tracking](#tracking)
-    - [Customisation](#customisation)
-        - [Disabling the Default Route](#disabling-the-default-route)
-        - [Default URL Key Length](#default-url-key-length)
-        - [Tracking Visits](#tracking-visits)
-            - [Default Tracking](#default-tracking)
-            - [Tracking Fields](#tracking-fields)
-        - [Config Validation](#config-validation)
-        - [Custom Database Connection](#custom-database-connection)
-        - [Specifying the Key Generator](#specifying-the-key-generator)
-        - [Specifying the User Agent Parser](#specifying-the-user-agent-parser)
-        - [Specifying the Allowed URL Schemes](#specifying-the-allowed-url-schemes)
-    - [Helper Methods](#helper-methods)
-        - [Visits](#visits)
-        - [Find by URL Key](#find-by-url-key)
-        - [Find by Destination URL](#find-by-destination-url)
-        - [Tracking Enabled](#tracking-enabled)
-        - [Tracked Fields](#tracked-fields)
+    - [Defining Redactable Models](#defining-redactable-models)
+    - [The `model:redact` Command](#the-modelredact-command)
+    - [Redaction Strategies](#redaction-strategies)
+        - [`ReplaceContents`](#replacecontents)
+        - [`HashContents`](#hashcontents)
+        - [`MaskContents`](#maskcontents)
+        - [Custom Redaction Strategies](#custom-redaction-strategies)
+    - [Manually Redacting Models](#manually-redacting-models)
     - [Events](#events)
-        - [Short URL Visited](#short-url-visited)
-    - [Model Factories](#model-factories)
+      - [`ModelRedacted`](#modelredacted)
 - [Testing](#testing)
 - [Security](#security)
-- [Contribution](#contribution)
 - [Credits](#credits)
-- [Changelog](#changelog)
-- [Upgrading](#upgrading)
 - [License](#license)
     
 ## Overview
@@ -170,7 +132,7 @@ You may want to set this to run on a schedule (such as on a daily basis) in your
 
 The package ships with several strategies that you can use redacting fields:
 
-#### ReplaceContents
+#### `ReplaceContents`
 
 The `ReplaceContents` strategy allows you to replace the contents of the fields with a specified value.
 
@@ -221,7 +183,7 @@ class User extends Authenticatable implements Redactable
 
 Imagine we have a user with ID `123` and a `name` of `John Doe`. Running the above code would replace the `name` field with `name_123`.
 
-#### HashContents
+#### `HashContents`
 
 The `HashContents` strategy allows you to MD5 hash the contents of the field.
 
@@ -247,7 +209,7 @@ class Invitation extends Model implements Redactable
 }
 ```
 
-#### MaskContents
+#### `MaskContents`
 
 The `MaskContents` strategy allows you to mask the contents of the field with a specified character.
 
