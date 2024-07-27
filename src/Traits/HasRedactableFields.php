@@ -9,7 +9,7 @@ use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use AshAllenDesign\RedactableModels\Support\Redactor;
 
-trait HasRedactedFields
+trait HasRedactableFields
 {
     /**
      * @param  RedactionStrategy|null  $strategy

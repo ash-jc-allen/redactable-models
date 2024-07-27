@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace AshAllenDesign\RedactableModels\Tests\Feature\Traits\HasRedactedFields;
+namespace AshAllenDesign\RedactableModels\Tests\Feature\Traits\HasRedactableFields;
 
 use AshAllenDesign\RedactableModels\Exceptions\RedactableFieldsException;
 use AshAllenDesign\RedactableModels\Support\Strategies\ReplaceContents;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\User;
 use AshAllenDesign\RedactableModels\Tests\TestCase;
-use AshAllenDesign\RedactableModels\Traits\HasRedactedFields;
+use AshAllenDesign\RedactableModels\Traits\HasRedactableFields;
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -58,7 +58,7 @@ class RedactFieldsTest extends TestCase
 
         $model = new class extends Model
         {
-            use HasRedactedFields;
+            use HasRedactableFields;
         };
 
         $model->redactFields();

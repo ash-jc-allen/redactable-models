@@ -7,13 +7,13 @@ namespace AshAllenDesign\RedactableModels\Tests\Data\Models;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use AshAllenDesign\RedactableModels\Support\Strategies\ReplaceContents;
-use AshAllenDesign\RedactableModels\Traits\HasRedactedFields;
+use AshAllenDesign\RedactableModels\Traits\HasRedactableFields;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Redactable
 {
-    use HasRedactedFields;
+    use HasRedactableFields;
 
     /**
      * The attributes that are mass assignable.
