@@ -6,7 +6,7 @@
 <a href="https://packagist.org/packages/ashallendesign/redactable-models"><img src="https://img.shields.io/packagist/v/ashallendesign/redactable-models.svg?style=flat-square" alt="Latest Version on Packagist"></a>
 <a href="https://packagist.org/packages/ashallendesign/redactable-models"><img src="https://img.shields.io/packagist/dt/ashallendesign/redactable-models.svg?style=flat-square" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/ashallendesign/redactable-models"><img src="https://img.shields.io/packagist/php-v/ashallendesign/redactable-models?style=flat-square" alt="PHP from Packagist"></a>
-<a href="https://github.com/ash-jc-allen/redactable-models/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ash-jc-allen/redactable-models?style=flat-square" alt="GitHub license"></a>
+<a href="https://github.com/ash-jc-allen/redactable-models/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/ash-jc-allen/redactable-models?style=flat-square" alt="GitHub license"></a>
 </p>
 
 ## Table of Contents
