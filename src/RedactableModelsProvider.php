@@ -5,19 +5,10 @@ declare(strict_types=1);
 namespace AshAllenDesign\RedactableModels;
 
 use Illuminate\Support\ServiceProvider;
+use AshAllenDesign\RedactableModels\Console\Commands\RedactCommand;
 
 class RedactableModelsProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register(): void
-    {
-        //
-    }
-
     /**
      * Bootstrap any application services.
      *
@@ -26,7 +17,7 @@ class RedactableModelsProvider extends ServiceProvider
     public function boot(): void
     {
         $this->commands([
-            Console\Commands\RedactCommand::class,
+            RedactCommand::class,
         ]);
     }
 }

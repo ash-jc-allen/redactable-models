@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class HashContents implements RedactionStrategy
 {
+    /**
+     * @var string[]
+     */
     private array $fields;
 
     public function apply(Redactable&Model $model): void
@@ -21,6 +24,10 @@ class HashContents implements RedactionStrategy
         $model->save();
     }
 
+    /**
+     * @param string[] $fields
+     * @return $this
+     */
     public function fields(array $fields): static
     {
         $this->fields = $fields;

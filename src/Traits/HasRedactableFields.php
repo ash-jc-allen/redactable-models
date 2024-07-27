@@ -12,9 +12,6 @@ use AshAllenDesign\RedactableModels\Support\Redactor;
 trait HasRedactableFields
 {
     /**
-     * @param  RedactionStrategy|null  $strategy
-     * @return void
-     *
      * @throws RedactableFieldsException
      */
     public function redactFields(RedactionStrategy $strategy = null): void

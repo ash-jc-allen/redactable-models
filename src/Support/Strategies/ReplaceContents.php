@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReplaceContents implements RedactionStrategy
 {
+    /**
+     * @var array<string,mixed>|Closure(Model $model): void
+     */
     private array|Closure $replaceWithMappings;
 
     public function apply(Redactable&Model $model): void
@@ -22,6 +25,10 @@ class ReplaceContents implements RedactionStrategy
         $model->save();
     }
 
+    /**
+     * @param array<string,mixed>|Closure(Model $model): void $replaceWith
+     * @return $this
+     */
     public function replaceWith(array|Closure $replaceWith): static
     {
         $this->replaceWithMappings = $replaceWith;

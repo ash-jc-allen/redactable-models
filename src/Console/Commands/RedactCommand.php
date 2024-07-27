@@ -12,7 +12,6 @@ use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-// TODO Write tests for me.
 class RedactCommand extends Command
 {
     protected $signature = 'model:redact';
