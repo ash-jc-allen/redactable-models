@@ -7,12 +7,13 @@ namespace AshAllenDesign\RedactableModels\Support\Strategies;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 
 class ReplaceContents implements RedactionStrategy
 {
     private array|Closure $replaceWithMappings;
 
-    public function apply(Redactable $model): void
+    public function apply(Redactable&Model $model): void
     {
         is_array($this->replaceWithMappings)
             ? $model->forceFill($this->replaceWithMappings)
