@@ -8,8 +8,6 @@ use AshAllenDesign\RedactableModels\Events\ModelRedacted;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 
-// TODO Write tests for me.
-
 class Redactor
 {
     public function redact(Redactable $model, RedactionStrategy $strategy): void

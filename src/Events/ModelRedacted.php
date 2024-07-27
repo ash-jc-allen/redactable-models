@@ -15,7 +15,7 @@ class ModelRedacted
     use InteractsWithSockets;
     use SerializesModels;
 
-    public function __construct(Redactable $redactable)
+    public function __construct(public Redactable $model)
     {
         //
     }
