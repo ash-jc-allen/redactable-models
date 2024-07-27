@@ -8,6 +8,7 @@ use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use Illuminate\Support\Str;
 
+// TODO Can we pass this to the "ReplaceContents" class?
 class MaskContents implements RedactionStrategy
 {
     private array $masks;
