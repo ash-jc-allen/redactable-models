@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace AshAllenDesign\RedactableModels\Console\Commands;
 
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
+use AshAllenDesign\RedactableModels\Support\Redactor;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
+// TODO Write tests for me.
 class RedactCommand extends Command
 {
     protected $signature = 'model:redact';
@@ -30,6 +32,8 @@ class RedactCommand extends Command
 
     private function redactModel(string $model): void
     {
+        $redactor = app(Redactor::class);
+
         /** @var Redactable $instance */
         $instance = new $model;
 
@@ -39,8 +43,8 @@ class RedactCommand extends Command
 
         $this->components->info('Redacting [' . $models->count() . '] [' . $model . '] models.');
 
-        $models->map(function (Redactable $model) use ($strategy) {
-            $strategy->apply($model);
+        $models->map(function (Redactable $model) use ($redactor, $strategy): void {
+            $redactor->redact($model, $strategy);
         });
     }
 

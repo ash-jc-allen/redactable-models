@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\RedactableModels\Tests\Data\Models;
 
-use AshAllenDesign\RedactableModels\Interfaces\Redactable;
-use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
-use AshAllenDesign\RedactableModels\Support\Strategies\ReplaceContents;
 use AshAllenDesign\RedactableModels\Traits\HasRedactedFields;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements Redactable
+class Post extends Authenticatable
 {
     use HasRedactedFields;
 
@@ -45,17 +41,5 @@ class User extends Authenticatable implements Redactable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function redactable(): Builder
-    {
-        // Dummy value set as placeholder.
-        return static::query();
-    }
-
-    public function redactionStrategy(): RedactionStrategy
-    {
-        // Dummy value set as placeholder.
-        return (new ReplaceContents())->replaceWith(['name' => 'REDACTED']);
     }
 }
