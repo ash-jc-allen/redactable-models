@@ -14,7 +14,8 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class RedactCommand extends Command
 {
-    protected $signature = 'model:redact';
+    protected $signature = 'model:redact
+                                {--chunk=1000 : The number of models to retrieve per chunk of models to be redacted}';
 
     protected $description = 'Redact the contents of the redactable fields in the database.';
 
@@ -38,12 +39,11 @@ class RedactCommand extends Command
 
         $strategy = $instance->redactionStrategy();
 
-        $models = $instance->redactable()->get();
+        $modelCount = $instance->redactable()->count();
+        $this->components->info('Redacting ['.$modelCount.'] ['.$model.'] models.');
 
-        $this->components->info('Redacting ['.$models->count().'] ['.$model.'] models.');
-
-        $models->map(function (Redactable $model) use ($redactor, $strategy): void {
-            $redactor->redact($model, $strategy);
+        $instance->redactable()->chunkById($this->option('chunk'), function ($models) use ($redactor, $strategy, $instance) {
+            $redactor->redact($models, $strategy, $instance);
         });
     }
 

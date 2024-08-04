@@ -7,13 +7,17 @@ namespace AshAllenDesign\RedactableModels\Support;
 use AshAllenDesign\RedactableModels\Events\ModelRedacted;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class Redactor
 {
-    public function redact(Redactable $model, RedactionStrategy $strategy): void
+    public function redact(Collection $models, RedactionStrategy $strategy, Redactable $instance): void
     {
-        $strategy->apply($model);
+        $strategy->apply($models, $instance);
 
-        event(new ModelRedacted($model));
+        $models->each(function (Redactable $model) {
+            event(new ModelRedacted($model));
+        });
     }
 }
