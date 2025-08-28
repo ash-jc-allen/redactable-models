@@ -64,12 +64,7 @@ class RedactCommand extends Command
 
         $this->components->info('Mass redacting ['.$count.'] ['.$model.'] models.');
 
-        $chunkSize = 1000;
-        $query->chunk($chunkSize, function ($models) use ($strategy, $model) {
-            $this->components->info('Processing chunk of ['.$models->count().'] ['.$model.'] models.');
-
-            $strategy->massApply($models);
-        });
+        $strategy->massApply($query);
     }
 
     /**

@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\RedactableModels\Support\Strategies;
 
-use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 use InvalidArgumentException;
 
 class HashContents implements RedactionStrategy
@@ -28,7 +26,7 @@ class HashContents implements RedactionStrategy
         $model->save();
     }
 
-    public function massApply(Collection $models): Builder
+    public function massApply(Builder $query): void
     {
         throw new InvalidArgumentException('Mass redaction is not supported for the HashContents strategy.');
     }

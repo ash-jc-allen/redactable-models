@@ -8,8 +8,6 @@ use AshAllenDesign\RedactableModels\Support\Strategies\ReplaceContents;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\MassRedactableUser;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\User;
 use AshAllenDesign\RedactableModels\Tests\TestCase;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Query\Builder;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -77,28 +75,12 @@ class ReplaceContentsTest extends TestCase
             $model->email = 'user'.$i.'@example.com';
             $model->password = 'password';
             $models[] = $model;
+            $model->save();
         }
 
-        $strategyMock = $this->getMockBuilder(ReplaceContents::class)
-            ->onlyMethods(['massApply'])
-            ->getMock();
+        $strategy->massApply(query: (new MassRedactableUser())->massRedactable());
 
-        $strategyMock->replaceWith(['name' => 'John Doe']);
-
-        $strategyMock->method('massApply')
-            ->willReturnCallback(function ($collection) use ($strategyMock) {
-                foreach ($collection as $model) {
-                    $model->name = 'John Doe';
-                }
-
-                return $this->getMockBuilder(Builder::class)
-                    ->disableOriginalConstructor()
-                    ->getMock();
-            });
-
-        $eloquentModels = new Collection($models);
-
-        $strategyMock->massApply($eloquentModels);
+        $models = MassRedactableUser::all();
 
         foreach ($models as $model) {
             $this->assertSame('John Doe', $model->name);
@@ -114,11 +96,9 @@ class ReplaceContentsTest extends TestCase
             $user->name = 'name_'.$user->id;
         });
 
-        $models = new Collection([new MassRedactableUser()]);
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Mass redaction only supports array mappings, not closures.');
 
-        $strategy->massApply($models);
+        $strategy->massApply(MassRedactableUser::query());
     }
 }

@@ -7,10 +7,10 @@ namespace AshAllenDesign\RedactableModels\Support\Strategies;
 use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
 use PHPUnit\Framework\Assert;
+use RuntimeException;
 
 class FakeStrategy implements RedactionStrategy
 {
@@ -22,16 +22,9 @@ class FakeStrategy implements RedactionStrategy
         $this->applied = true;
     }
 
-    public function massApply(Collection $models): Builder
+    public function massApply(Builder $query): void
     {
-        $this->massApplied = true;
-
-        $model = $models->first();
-        if (!$model || !($model instanceof MassRedactable)) {
-            return new Builder(app('db')->connection());
-        }
-
-        return $model->newQuery()->getQuery();
+        throw new RuntimeException('Implement this if we need it for testing.');
     }
 
     public function assertHasBeenApplied(): void

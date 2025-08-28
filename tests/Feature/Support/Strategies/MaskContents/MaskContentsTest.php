@@ -43,11 +43,9 @@ class MaskContentsTest extends TestCase
         $strategy = new MaskContents();
         $strategy->mask('name', '*', 0, 4);
 
-        $models = new Collection([new MassRedactableUser()]);
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Mass redaction is not supported for the MaskContents strategy.');
 
-        $strategy->massApply($models);
+        $strategy->massApply(MassRedactableUser::query());
     }
 }

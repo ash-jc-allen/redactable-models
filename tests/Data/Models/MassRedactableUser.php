@@ -12,6 +12,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class MassRedactableUser extends Authenticatable implements MassRedactable
 {
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *

@@ -44,11 +44,9 @@ class HashContentsTest extends TestCase
         $strategy = new HashContents();
         $strategy->fields(['name']);
 
-        $models = new Collection([new MassRedactableUser()]);
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Mass redaction is not supported for the HashContents strategy.');
 
-        $strategy->massApply($models);
+        $strategy->massApply(MassRedactableUser::query());
     }
 }

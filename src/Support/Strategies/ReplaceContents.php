@@ -8,9 +8,9 @@ use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use Closure;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Query\Builder;
+use InvalidArgumentException;
 
 class ReplaceContents implements RedactionStrategy
 {
@@ -28,24 +28,13 @@ class ReplaceContents implements RedactionStrategy
         $model->save();
     }
 
-    public function massApply(Collection $models): Builder
+    public function massApply(Builder $query): void
     {
         if (!is_array($this->replaceWithMappings)) {
-            throw new \InvalidArgumentException('Mass redaction only supports array mappings, not closures.');
+            throw new InvalidArgumentException('Mass redaction only supports array mappings, not closures.');
         }
 
-        $model = $models->first();
-        if (!($model instanceof MassRedactable)) {
-            return new Builder(app('db')->connection());
-        }
-
-        $query = $model->newQuery()
-            ->whereIn('id', $models->pluck('id'))
-            ->getQuery();
-
-        $query->update($this->replaceWithMappings);
-
-        return $query;
+        $query->getQuery()->update($this->replaceWithMappings);
     }
 
     /**
