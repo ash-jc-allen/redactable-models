@@ -50,7 +50,7 @@ This package allows you to define which models and fields should be redacted, an
 The package has been developed and tested to work with the following minimum requirements:
 
 - PHP 8.2
-- Laravel 10
+- Laravel 11
 
 ### Install the Package
 
