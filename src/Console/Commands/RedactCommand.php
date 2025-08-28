@@ -50,10 +50,6 @@ class RedactCommand extends Command
                 $this->components->info('Processing chunk of ['.$models->count().'] ['.$model.'] models.');
 
                 $strategy->massApply($models);
-
-                $models->each(function ($model) {
-                    event(new ModelRedacted($model));
-                });
             });
         } else {
             /** @var Redactable $instance */

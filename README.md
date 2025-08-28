@@ -309,6 +309,8 @@ $user->redactFields(
 
 When a model is redacted, an `AshAllenDesign\RedactableModels\Events\ModelRedacted` event is fired that can be listened on.
 
+Please note, this event is not fired if the model was mass redacted (i.e., the model uses the `AshAllenDesign\RedactableModels\Interfaces\MassRedactable` interface). This is because the models are never actually retrieved from the database when mass redacting, so there isn't a model instance to pass to the event.
+
 ## Testing
 
 To run the package's unit tests, run the following command:
