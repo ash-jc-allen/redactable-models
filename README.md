@@ -71,7 +71,7 @@ Your model may look something like so:
 
 ```php
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
-use Illuminate\Contracts\Database\Eloquent\Builder
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class User extends Model implements Redactable
 {
@@ -98,7 +98,7 @@ As an example, if we wanted to redact the `email` and `name` fields from all `Ap
 ```php
 use AshAllenDesign\RedactableModels\Support\Strategies\ReplaceContents;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
-use Illuminate\Contracts\Database\Eloquent\Builder
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class User extends Model implements Redactable
 {
@@ -129,7 +129,7 @@ Your model may look something like so:
 
 ```php
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
-use Illuminate\Contracts\Database\Eloquent\Builder
+use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class User extends Model implements Redactable
 {
