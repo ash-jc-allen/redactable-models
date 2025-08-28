@@ -128,21 +128,24 @@ In order to make a model mass redactable, you need to add the `AshAllenDesign\Re
 Your model may look something like so:
 
 ```php
-use AshAllenDesign\RedactableModels\Interfaces\Redactable;
+use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
-class User extends Model implements Redactable
+class User extends Model implements MassRedactable
 {
     // ...
     
     public function massRedactable(): Builder
     {
-        // ...
+        return static::query()->where('created_at', '<', now()->subDays(30));
     }
 
     public function redactionStrategy(): RedactionStrategy
     {
-        // ...
+        return app(ReplaceContents::class)->replaceWith([
+            'name' => 'REDACTED',
+            'email' => 'redacted@redacted.com',
+        ]);
     }
 }
 ```
