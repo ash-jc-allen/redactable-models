@@ -8,7 +8,6 @@ use AshAllenDesign\RedactableModels\Support\Strategies\MaskContents;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\MassRedactableUser;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\User;
 use AshAllenDesign\RedactableModels\Tests\TestCase;
-use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 
