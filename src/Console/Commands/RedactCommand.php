@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\RedactableModels\Console\Commands;
 
-use AshAllenDesign\RedactableModels\Events\ModelRedacted;
 use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
+use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use AshAllenDesign\RedactableModels\Support\Redactor;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -35,42 +35,45 @@ class RedactCommand extends Command
     {
         $redactor = app(Redactor::class);
 
+        /** @var Redactable|MassRedactable $instance */
         $instance = new $model;
         $strategy = $instance->redactionStrategy();
 
         if ($this->isMassRedactable($model)) {
-            /** @var MassRedactable $instance */
-            $query = $instance->massRedactable();
-            $count = $query->count();
+            $this->handleMassRedaction($model, $strategy);
 
-            $this->components->info('Mass redacting ['.$count.'] ['.$model.'] models.');
-
-            $chunkSize = 1000;
-            $query->chunk($chunkSize, function ($models) use ($strategy, $model) {
-                $this->components->info('Processing chunk of ['.$models->count().'] ['.$model.'] models.');
-
-                $strategy->massApply($models);
-            });
-        } else {
-            /** @var Redactable $instance */
-            $query = $instance->redactable();
-            $count = $query->count();
-
-            $this->components->info('Redacting ['.$count.'] ['.$model.'] models.');
-
-            $chunkSize = 1000;
-            $query->chunk($chunkSize, function ($models) use ($redactor, $strategy, $model) {
-                $this->components->info('Processing chunk of ['.$models->count().'] ['.$model.'] models.');
-
-                $models->map(function (Redactable $model) use ($redactor, $strategy): void {
-                    $redactor->redact($model, $strategy);
-                });
-            });
+            return;
         }
+
+        $models = $instance->redactable()->get();
+
+        $this->components->info('Redacting ['.$models->count().'] ['.$model.'] models.');
+
+        $models->map(function (Redactable $model) use ($redactor, $strategy): void {
+            $redactor->redact($model, $strategy);
+        });
+    }
+
+    private function handleMassRedaction(string $model, RedactionStrategy $strategy): void
+    {
+        /** @var MassRedactable $instance */
+        $instance = new $model;
+
+        $query = $instance->massRedactable();
+        $count = $query->count();
+
+        $this->components->info('Mass redacting ['.$count.'] ['.$model.'] models.');
+
+        $chunkSize = 1000;
+        $query->chunk($chunkSize, function ($models) use ($strategy, $model) {
+            $this->components->info('Processing chunk of ['.$models->count().'] ['.$model.'] models.');
+
+            $strategy->massApply($models);
+        });
     }
 
     /**
-     * @return Collection<string>
+     * @return Collection<class-string>
      */
     private function redactableModels(): Collection
     {
@@ -93,7 +96,7 @@ class RedactCommand extends Command
     /**
      * Determine if the given model class is redactable.
      *
-     * @param  string  $model
+     * @param  class-string  $model
      * @return bool
      */
     private function isRedactable(string $model): bool
@@ -106,7 +109,7 @@ class RedactCommand extends Command
     /**
      * Determine if the given model class is mass redactable.
      *
-     * @param  string  $model
+     * @param  class-string  $model
      * @return bool
      */
     private function isMassRedactable(string $model): bool
