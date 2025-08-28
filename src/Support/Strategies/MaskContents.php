@@ -41,7 +41,7 @@ class MaskContents implements RedactionStrategy
         throw new InvalidArgumentException('Mass redaction is not supported for the MaskContents strategy.');
     }
 
-    public function mask(string $field, string $character, int $index, int $length = null, string $encoding = 'UTF-8'): static
+    public function mask(string $field, string $character, int $index, ?int $length = null, string $encoding = 'UTF-8'): static
     {
         $this->masks[] = [
             'field' => $field,
