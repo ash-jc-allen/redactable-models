@@ -14,7 +14,7 @@ trait HasRedactableFields
     /**
      * @throws RedactableFieldsException
      */
-    public function redactFields(RedactionStrategy $strategy = null): void
+    public function redactFields(?RedactionStrategy $strategy = null): void
     {
         if (! in_array(Redactable::class, class_implements($this), true)) {
             throw new RedactableFieldsException('The model must implement the ['.Redactable::class.'] interface.');
