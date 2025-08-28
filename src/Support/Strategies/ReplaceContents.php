@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\RedactableModels\Support\Strategies;
 
-use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use Closure;
@@ -30,7 +29,7 @@ class ReplaceContents implements RedactionStrategy
 
     public function massApply(Builder $query): void
     {
-        if (!is_array($this->replaceWithMappings)) {
+        if (! is_array($this->replaceWithMappings)) {
             throw new InvalidArgumentException('Mass redaction only supports array mappings, not closures.');
         }
 

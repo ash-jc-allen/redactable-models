@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\RedactableModels\Support\Strategies;
 
-use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
 use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use Illuminate\Contracts\Database\Eloquent\Builder;
