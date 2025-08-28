@@ -8,6 +8,7 @@ use AshAllenDesign\RedactableModels\Support\Strategies\HashContents;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\MassRedactableUser;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\User;
 use AshAllenDesign\RedactableModels\Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -43,7 +44,7 @@ class HashContentsTest extends TestCase
         $strategy = new HashContents();
         $strategy->fields(['name']);
 
-        $models = new \Illuminate\Database\Eloquent\Collection([new MassRedactableUser()]);
+        $models = new Collection([new MassRedactableUser()]);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Mass redaction is not supported for the HashContents strategy.');

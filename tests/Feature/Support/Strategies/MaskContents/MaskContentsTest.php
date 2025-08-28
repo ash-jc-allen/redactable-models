@@ -8,6 +8,7 @@ use AshAllenDesign\RedactableModels\Support\Strategies\MaskContents;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\MassRedactableUser;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\User;
 use AshAllenDesign\RedactableModels\Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -42,7 +43,7 @@ class MaskContentsTest extends TestCase
         $strategy = new MaskContents();
         $strategy->mask('name', '*', 0, 4);
 
-        $models = new \Illuminate\Database\Eloquent\Collection([new MassRedactableUser()]);
+        $models = new Collection([new MassRedactableUser()]);
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Mass redaction is not supported for the MaskContents strategy.');
