@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace AshAllenDesign\RedactableModels\Console\Commands;
 
+use AshAllenDesign\RedactableModels\Interfaces\MassRedactable;
 use AshAllenDesign\RedactableModels\Interfaces\Redactable;
+use AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy;
 use AshAllenDesign\RedactableModels\Support\Redactor;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -33,10 +35,15 @@ class RedactCommand extends Command
     {
         $redactor = app(Redactor::class);
 
-        /** @var Redactable $instance */
+        /** @var Redactable|MassRedactable $instance */
         $instance = new $model;
-
         $strategy = $instance->redactionStrategy();
+
+        if ($this->isMassRedactable($model)) {
+            $this->handleMassRedaction($model, $strategy);
+
+            return;
+        }
 
         $models = $instance->redactable()->get();
 
@@ -47,8 +54,21 @@ class RedactCommand extends Command
         });
     }
 
+    private function handleMassRedaction(string $model, RedactionStrategy $strategy): void
+    {
+        /** @var MassRedactable $instance */
+        $instance = new $model;
+
+        $query = $instance->massRedactable();
+        $count = $query->count();
+
+        $this->components->info('Mass redacting ['.$count.'] ['.$model.'] models.');
+
+        $strategy->massApply($query);
+    }
+
     /**
-     * @return Collection<string>
+     * @return Collection<class-string>
      */
     private function redactableModels(): Collection
     {
@@ -64,14 +84,14 @@ class RedactCommand extends Command
             })->filter(function (string $model): bool {
                 return class_exists($model);
             })->filter(function (string $model): bool {
-                return $this->isRedactable($model);
+                return $this->isRedactable($model) || $this->isMassRedactable($model);
             })->values();
     }
 
     /**
      * Determine if the given model class is redactable.
      *
-     * @param  string  $model
+     * @param  class-string  $model
      * @return bool
      */
     private function isRedactable(string $model): bool
@@ -79,5 +99,18 @@ class RedactCommand extends Command
         $interfaces = class_implements($model);
 
         return in_array(Redactable::class, $interfaces, strict: true);
+    }
+
+    /**
+     * Determine if the given model class is mass redactable.
+     *
+     * @param  class-string  $model
+     * @return bool
+     */
+    private function isMassRedactable(string $model): bool
+    {
+        $interfaces = class_implements($model);
+
+        return in_array(MassRedactable::class, $interfaces, strict: true);
     }
 }

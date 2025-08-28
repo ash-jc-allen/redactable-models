@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace AshAllenDesign\RedactableModels\Tests\Feature\Support\Strategies\MaskContents;
 
 use AshAllenDesign\RedactableModels\Support\Strategies\MaskContents;
+use AshAllenDesign\RedactableModels\Tests\Data\Models\MassRedactableUser;
 use AshAllenDesign\RedactableModels\Tests\Data\Models\User;
 use AshAllenDesign\RedactableModels\Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
+use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
 
 class MaskContentsTest extends TestCase
@@ -32,5 +35,17 @@ class MaskContentsTest extends TestCase
 
         $this->assertSame('****Allen', $model->name);
         $this->assertSame('as---xample.com', $model->email);
+    }
+
+    #[Test]
+    public function mass_redaction_throws_exception(): void
+    {
+        $strategy = new MaskContents();
+        $strategy->mask('name', '*', 0, 4);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Mass redaction is not supported for the MaskContents strategy.');
+
+        $strategy->massApply(MassRedactableUser::query());
     }
 }
