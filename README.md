@@ -17,6 +17,7 @@
     - [Install the Package](#install-the-package)
 - [Usage](#usage)
     - [Defining Redactable Models](#defining-redactable-models)
+    - [Defining Mass Redactable Models](#defining-mass-redactable-models)
     - [The `model:redact` Command](#the-modelredact-command)
     - [Redaction Strategies](#redaction-strategies)
         - [`ReplaceContents`](#replacecontents)
@@ -117,6 +118,44 @@ class User extends Model implements Redactable
     }
 }
 ```
+
+### Defining Mass Redactable Models
+
+You may choose to make a model mass redactable rather than redactable on an individual basis. This is useful when you have a large number of models to redact, as it will perform the redaction in a single database query rather than retrieving each model and redacting them one at a time.
+
+In order to make a model mass redactable, you need to add the `AshAllenDesign\RedactableModels\Interfaces\MassRedactable` interface to the model. This will enforce two new methods (`massRedactable` and `redactionStrategy`) that you need to implement.
+
+Your model may look something like so:
+
+```php
+use AshAllenDesign\RedactableModels\Interfaces\Redactable;
+use Illuminate\Contracts\Database\Eloquent\Builder
+
+class User extends Model implements Redactable
+{
+    // ...
+    
+    public function massRedactable(): Builder
+    {
+        // ...
+    }
+
+    public function redactionStrategy(): RedactionStrategy
+    {
+        // ...
+    }
+}
+```
+
+The `massRedactable` method is similar to the `redactable` method and allows you to return an instance of `Illuminate\Contracts\Database\Eloquent\Builder` which defines the models that are redactable.
+
+The `redactionStrategy` method allows you to return an instance of `AshAllenDesign\RedactableModels\Interfaces\RedactionStrategy` which defines how the fields should be redacted.
+
+#### Things To Note About Mass Redactable Models
+
+When mass redacting models, the models are never actually retrieved from the database. This is great for performance, because it means the models don't need to be retrieved, hydrated, and then saved back to the database. Instead, a single `UPDATE` query is run directly in the database. However, this means the `AshAllenDesign\RedactableModels\Events\ModelRedacted` will not be fired, because there is no model instance to pass to the event.
+
+Furthermore, due to the limitations of mass updating models in a single query, only the `AshAllenDesign\RedactableModels\Support\Strategies\ReplaceContents` redaction strategy can be used. This is because the other built-in strategies require the model to be retrieved in order to perform the redaction.
 
 ### The `model:redact` Command
 
