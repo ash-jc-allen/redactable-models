@@ -35,9 +35,6 @@
     
 ## Overview
 
-> [!IMPORTANT]  
-> This package is still in development. There may be some bugs and API changes before the first stable release.
-
 A Laravel package that you can use to redact, obfuscate, or mask fields from your models in a consistent and easy way.
 
 When building web applications, you'll often need to keep hold of old data for auditing or reporting purposes. But for data privacy and security reasons, you may want to redact the sensitive information from the data that you store. This way, you can keep the rows in the database, but without the sensitive information.
