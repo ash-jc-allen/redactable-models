@@ -152,13 +152,13 @@ class RedactCommandTest extends TestCase
 
     private function configureApplication(): void
     {
-        $container = new Application(__DIR__ . '/../../../Data');
+        $container = new Application(__DIR__.'/../../../Data');
 
         Application::setInstance($container);
 
         Closure::bind(
             function () {
-                $this->useAppPath(__DIR__ . '/../../../Data');
+                $this->useAppPath(__DIR__.'/../../../Data');
 
                 return $this->namespace = 'AshAllenDesign\\RedactableModels\\Tests\\Data\\';
             },
