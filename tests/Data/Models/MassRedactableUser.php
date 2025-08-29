@@ -49,12 +49,12 @@ class MassRedactableUser extends Authenticatable implements MassRedactable
     public function massRedactable(): Builder
     {
         // Dummy value set as placeholder.
-        return static::query();
+        return static::query()->whereLike('email', '%@mass-redactable.com');
     }
 
     public function redactionStrategy(): RedactionStrategy
     {
         // Dummy value set as placeholder.
-        return (new ReplaceContents())->replaceWith(['name' => 'REDACTED']);
+        return (new ReplaceContents())->replaceWith(['name' => 'MASS REDACTED']);
     }
 }

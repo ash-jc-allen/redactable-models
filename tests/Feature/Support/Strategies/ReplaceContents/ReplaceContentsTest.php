@@ -78,7 +78,7 @@ class ReplaceContentsTest extends TestCase
             $model->save();
         }
 
-        $strategy->massApply(query: (new MassRedactableUser())->massRedactable());
+        $strategy->massApply(query: MassRedactableUser::query());
 
         $models = MassRedactableUser::all();
 
