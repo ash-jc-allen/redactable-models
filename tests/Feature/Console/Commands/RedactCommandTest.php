@@ -181,4 +181,11 @@ class RedactCommandTest extends TestCase
 
         return $output->fetch();
     }
+
+    protected function tearDown(): void
+    {
+        $this->refreshApplication();
+
+        parent::tearDown();
+    }
 }
