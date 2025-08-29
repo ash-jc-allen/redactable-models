@@ -50,7 +50,7 @@ class User extends Authenticatable implements Redactable
     public function redactable(): Builder
     {
         // Dummy value set as placeholder.
-        return static::query();
+        return static::query()->whereLike('email', '%@redactable.com');
     }
 
     public function redactionStrategy(): RedactionStrategy

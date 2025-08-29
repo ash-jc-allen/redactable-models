@@ -24,6 +24,12 @@ class RedactCommand extends Command
     {
         $models = $this->redactableModels();
 
+        if ($models->isEmpty()) {
+            $this->components->info('No redactable model classes were found.');
+
+            return static::SUCCESS;
+        }
+
         foreach ($models as $model) {
             $this->redactModel($model);
         }
