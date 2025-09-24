@@ -35,7 +35,7 @@ class HashContents implements RedactionStrategy
 
     public function algo(string $algo): static
     {
-        if (!in_array($algo, hash_algos())) {
+        if (! in_array($algo, hash_algos())) {
             throw new InvalidArgumentException("The algorithm `{$algo}` is not supported.");
         }
 
