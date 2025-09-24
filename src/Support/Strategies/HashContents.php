@@ -17,10 +17,12 @@ class HashContents implements RedactionStrategy
      */
     private array $fields;
 
+    private string $algo = 'md5';
+
     public function apply(Redactable&Model $model): void
     {
         foreach ($this->fields as $field) {
-            $model->{$field} = hash(algo: 'md5', data: $model->{$field});
+            $model->{$field} = hash(algo: $this->algo, data: $model->{$field});
         }
 
         $model->save();
@@ -29,6 +31,17 @@ class HashContents implements RedactionStrategy
     public function massApply(Builder $query): void
     {
         throw new InvalidArgumentException('Mass redaction is not supported for the HashContents strategy.');
+    }
+
+    public function algo(string $algo): static
+    {
+        if (!in_array($algo, hash_algos())) {
+            throw new InvalidArgumentException("The algorithm `{$algo}` is not supported.");
+        }
+
+        $this->algo = $algo;
+
+        return $this;
     }
 
     /**

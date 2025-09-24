@@ -48,4 +48,41 @@ class HashContentsTest extends TestCase
 
         $strategy->massApply(MassRedactableUser::query());
     }
+
+    #[Test]
+    public function can_customize_hash_algorithm(): void
+    {
+        $strategy = new HashContents();
+        $strategy->fields([
+            'name',
+        ]);
+        $strategy->algo('sha256');
+
+        $model = new User();
+
+        $model->name = 'Ash Allen';
+        $model->email = 'ash@example.com';
+        $model->password = 'password';
+
+        $model->save();
+
+        $strategy->apply($model);
+
+        $model->refresh();
+
+        $this->assertSame('2bc8a057ffc79a7063f26d3b4bc82f8a6b77ac63a26373001f44fa5398548dbb', $model->name);
+        $this->assertSame('ash@example.com', $model->email);
+    }
+
+    #[Test]
+    public function set_invalid_algorithm_throw_exception(): void
+    {
+        $strategy = new HashContents();
+        $strategy->fields(['name']);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The algorithm `invalid-algo` is not supported.');
+
+        $strategy->algo('invalid-algo');
+    }
 }

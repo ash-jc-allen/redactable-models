@@ -226,7 +226,7 @@ Imagine we have a user with ID `123` and a `name` of `John Doe`. Running the abo
 
 #### `HashContents`
 
-The `HashContents` strategy allows you to MD5 hash the contents of the field.
+The `HashContents` strategy allows you to hash the contents of the field with specific algorithm. "MD5" is the default algorithm.
 
 This can be useful when you still want to be able to compare the redacted fields, but don't want to expose the original data.
 
@@ -245,7 +245,7 @@ class Invitation extends Model implements Redactable
     {
         return app(HashContents::class))->fields([
             'email',
-        ]);
+        ])->algo('sha256');
     }
 }
 ```
