@@ -1,5 +1,9 @@
 # Changelog
 
+**v1.1.0 (released 2025-09-25):**
+
+- Added the ability to specify the hashing algorithm for the `HashContents` strategy. ([#30](https://github.com/ash-jc-allen/redactable-models/pull/30))
+
 **v1.0.0 (released 2025-08-29):**
 
 - Added support for Laravel 12. ([#20](https://github.com/ash-jc-allen/redactable-models/pull/20))
