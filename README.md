@@ -226,7 +226,7 @@ Imagine we have a user with ID `123` and a `name` of `John Doe`. Running the abo
 
 #### `HashContents`
 
-The `HashContents` strategy allows you to MD5 hash the contents of the field.
+The `HashContents` strategy allows you to hash the contents of the field using a given algorithm. By default, the "MD5" hashing algorithm will be used.
 
 This can be useful when you still want to be able to compare the redacted fields, but don't want to expose the original data.
 
@@ -243,12 +243,14 @@ class Invitation extends Model implements Redactable
 
     public function redactionStrategy(): RedactionStrategy
     {
-        return app(HashContents::class))->fields([
+        return app(HashContents::class)->fields([
             'email',
-        ]);
+        ])->algo('sha256');
     }
 }
 ```
+
+In the above example, the `email` field would be hashed using the "SHA-256" algorithm. To view all the available hashing algorithms that are supported, you can call the `hash_algos` function in PHP, or check out the PHP documentation: [https://www.php.net/manual/en/function.hash-algos.php](https://www.php.net/manual/en/function.hash-algos.php).
 
 #### `MaskContents`
 
