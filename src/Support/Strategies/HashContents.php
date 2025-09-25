@@ -33,9 +33,12 @@ class HashContents implements RedactionStrategy
         throw new InvalidArgumentException('Mass redaction is not supported for the HashContents strategy.');
     }
 
+    /**
+     * Specify the hashing algorithm to use.
+     */
     public function algo(string $algo): static
     {
-        if (! in_array($algo, hash_algos())) {
+        if (!in_array($algo, hash_algos(), strict: true)) {
             throw new InvalidArgumentException("The algorithm `{$algo}` is not supported.");
         }
 
