@@ -1,5 +1,9 @@
 # Changelog
 
+**v1.2.0 (released 2025-10-17):**
+
+- Added `.gitattributes` file. ([#31](https://github.com/ash-jc-allen/redactable-models/pull/31))
+
 **v1.1.0 (released 2025-09-25):**
 
 - Added the ability to specify the hashing algorithm for the `HashContents` strategy. ([#30](https://github.com/ash-jc-allen/redactable-models/pull/30))
