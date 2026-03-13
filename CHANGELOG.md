@@ -1,5 +1,10 @@
 # Changelog
 
+**v1.3.0 (released 2026-03-13):**
+
+- Added support for Laravel 13. ([#33](https://github.com/ash-jc-allen/redactable-models/pull/33))
+- Run the CI workflows using PHP 8.5. ([#32](https://github.com/ash-jc-allen/redactable-models/pull/32))
+
 **v1.2.0 (released 2025-10-17):**
 
 - Added `.gitattributes` file. ([#31](https://github.com/ash-jc-allen/redactable-models/pull/31))
