@@ -1,5 +1,9 @@
 # Changelog
 
+**v1.3.1 (released 2026-03-17):**
+
+- Fixed incorrect `laravel/framework` constraint in the `composer.json` file. ([#35](https://github.com/ash-jc-allen/redactable-models/pull/35))
+
 **v1.3.0 (released 2026-03-13):**
 
 - Added support for Laravel 13. ([#33](https://github.com/ash-jc-allen/redactable-models/pull/33))
